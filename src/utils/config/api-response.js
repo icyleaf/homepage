@@ -8,7 +8,6 @@ import {
   servicesFromConfig,
   servicesFromDocker,
   servicesFromKubernetes,
-  findGroupByName,
   servicesFromNomad,
 } from "utils/config/service-helpers";
 import { cleanWidgetGroups, widgetsFromConfig } from "utils/config/widget-helpers";
