@@ -382,11 +382,20 @@ export async function servicesFromNomad() {
           }
 
           const serverAddress = `http://${jobService.Address}:${jobService.Port}`;
+          const serviceHref = serviceTags[`${ANNOTATION_BASE}/href`] || serverAddress;
+          const serviceScaling = (!!serviceTags[`${ANNOTATION_BASE}/scaling`] ||
+            serviceTags[`${ANNOTATION_BASE}/scaling`] !== "false");
+
+          // Nomad always returns all some services when scaling (it will display all if keep href empty)
+          const existedService = !!discovered.find((service) => service.href === serviceHref);
+          if (existedService && serviceScaling) {
+            return;
+          }
+
           let constructedService = {
             job: jobService.JobID,
-            datacenter: jobService.Datacenter,
             namespace: jobService.Namespace,
-            href: serviceTags[`${ANNOTATION_BASE}/href`] || serverAddress,
+            href: serviceHref,
             name: serviceTags[`${ANNOTATION_BASE}/name`] || jobService.ServiceName,
             group: serviceTags[`${ANNOTATION_BASE}/group`] || "Nomad",
             weight: serviceTags[`${ANNOTATION_BASE}/weight`] || "0",
