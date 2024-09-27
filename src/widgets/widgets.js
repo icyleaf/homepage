@@ -65,6 +65,7 @@ import netalertx from "./netalertx/widget";
 import netdata from "./netdata/widget";
 import nextcloud from "./nextcloud/widget";
 import nextdns from "./nextdns/widget";
+import nomad from "./nomad/widget";
 import npm from "./npm/widget";
 import nzbget from "./nzbget/widget";
 import octoprint from "./octoprint/widget";
@@ -192,6 +193,7 @@ const widgets = {
   netdata,
   nextcloud,
   nextdns,
+  nomad,
   npm,
   nzbget,
   octoprint,

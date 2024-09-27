@@ -746,5 +746,11 @@
         "physicalRelease": "Physical release",
         "inCinemas": "In cinemas",
         "digitalRelease": "Digital release"
+    },
+    "nomad": {
+        "nodes": "节点",
+        "jobs": "任务",
+        "volumes": "数据卷",
+        "services": "服务"
     }
 }

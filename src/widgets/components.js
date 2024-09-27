@@ -73,6 +73,7 @@ const components = {
   netdata: dynamic(() => import("./netdata/component")),
   nextcloud: dynamic(() => import("./nextcloud/component")),
   nextdns: dynamic(() => import("./nextdns/component")),
+  nomad: dynamic(() => import("./nomad/component")),
   npm: dynamic(() => import("./npm/component")),
   nzbget: dynamic(() => import("./nzbget/component")),
   octoprint: dynamic(() => import("./octoprint/component")),
