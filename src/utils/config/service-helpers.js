@@ -300,16 +300,17 @@ export async function servicesFromNomad() {
         jobServices.forEach((jobService) => {
           const serviceTags = parseServiceTags(jobService.Tags);
 
-          if (serviceTags[`${ANNOTATION_BASE}/enabled`] !== "true" ||
-            (serviceTags[`${ANNOTATION_BASE}/instance`] &&
-              serviceTags[`${ANNOTATION_BASE}/instance`] !== instanceName)) {
+          if (
+            serviceTags[`${ANNOTATION_BASE}/enabled`] !== "true" ||
+            (serviceTags[`${ANNOTATION_BASE}/instance`] && serviceTags[`${ANNOTATION_BASE}/instance`] !== instanceName)
+          ) {
             return;
           }
 
           const serverAddress = `http://${jobService.Address}:${jobService.Port}`;
           const serviceHref = serviceTags[`${ANNOTATION_BASE}/href`] || serverAddress;
-          const serviceScaling = (!!serviceTags[`${ANNOTATION_BASE}/scaling`] ||
-            serviceTags[`${ANNOTATION_BASE}/scaling`] !== "false");
+          const serviceScaling =
+            !!serviceTags[`${ANNOTATION_BASE}/scaling`] || serviceTags[`${ANNOTATION_BASE}/scaling`] !== "false";
 
           // Nomad always returns all some services when scaling (it will display all if keep href empty)
           const existedService = !!discovered.find((service) => service.href === serviceHref);
@@ -339,11 +340,7 @@ export async function servicesFromNomad() {
           }
           Object.keys(jobService.Tags).forEach((annotation) => {
             if (annotation.startsWith(ANNOTATION_WIDGET_BASE)) {
-              shvl.set(
-                constructedService,
-                annotation.replace(`${ANNOTATION_BASE}/`, ""),
-                jobService.Tags[annotation],
-              );
+              shvl.set(constructedService, annotation.replace(`${ANNOTATION_BASE}/`, ""), jobService.Tags[annotation]);
             }
           });
 
@@ -399,7 +396,7 @@ export async function servicesFromNomad() {
       }
 
       const { name: serviceName, group: serverServiceGroup, ...pushedService } = clusterService;
-      const result  = {
+      const result = {
         name: serviceName,
         ...pushedService,
       };

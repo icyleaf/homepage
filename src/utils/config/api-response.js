@@ -245,7 +245,7 @@ export async function servicesResponse() {
         ...discoveredDockerGroup.services,
         ...discoveredKubernetesGroup.services,
         ...discoveredNomadGroup.services,
-        ...configuredGroup.services
+        ...configuredGroup.services,
       ]
         .filter((service) => service)
         .sort(compareServices),

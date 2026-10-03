@@ -7,10 +7,12 @@ export default class Nomad {
 
   async listServices() {
     const jobs = await this.listJobs();
-    const services = await Promise.all(jobs.map(async (job) => {
-      const s = await this.listJobServices(job.ID);
-      return s;
-    }));
+    const services = await Promise.all(
+      jobs.map(async (job) => {
+        const s = await this.listJobServices(job.ID);
+        return s;
+      }),
+    );
 
     return services.flat();
   }
@@ -25,16 +27,18 @@ export default class Nomad {
 
   async request(url, params) {
     try {
-      const headers = this.token ? {
-        Authorization: `Bearer ${this.token}`,
-      } : {};
+      const headers = this.token
+        ? {
+            Authorization: `Bearer ${this.token}`,
+          }
+        : {};
 
       const config = params || {};
-      config.headers = Object.assign((params.headers || {}), headers);
+      config.headers = Object.assign(params.headers || {}, headers);
 
-      return fetch(url, config).then(response => response.json());
+      return fetch(url, config).then((response) => response.json());
     } catch (error) {
-      return( Promise.reject(error));
+      return Promise.reject(error);
     }
   }
 }
